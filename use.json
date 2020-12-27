@@ -1,0 +1,7 @@
+{
+  "namespace": "abolish",
+  "use_index": "dist/index.js",
+  "extends": {
+    "RequestEngine": "dist/Extends/RequestEngine.js"
+  }
+}
