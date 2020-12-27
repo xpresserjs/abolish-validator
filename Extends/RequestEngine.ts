@@ -8,8 +8,7 @@ export = extendRequestEngine((RequestEngineClass) => {
 
 
         validate<R = Record<string, any>>(object: Record<string, any>, rules: Record<keyof R | string, any>): ValidationResult<R> {
-            const body = this.$body.all();
-            return Validator.validate<R>(body, rules);
+            return Validator.validate<R>(object, rules);
         }
 
         newAbolish(): Abolish {
@@ -28,8 +27,7 @@ export = extendRequestEngine((RequestEngineClass) => {
 
 
         validateAsync<R = Record<string, any>>(object: Record<string, any>, rules: Record<keyof R | string, any>): Promise<ValidationResult<R>> {
-            const body = this.$body.all();
-            return Validator.validateAsync<R>(body, rules);
+            return Validator.validateAsync<R>(object, rules);
         }
 
         validateQueryAsync<R = Record<string, any>>(rules: Record<keyof R | string, any>): Promise<ValidationResult<R>> {
