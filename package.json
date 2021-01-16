@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "description": "Using Abolish validator in xpresserjs",
   "main": "dist/index.js",
-  "types": "types",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/xpresser/abolish-validator"
@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@xpresser/plugin-tools": "^1.1.0",
-    "abolish": "^2.1.0"
+    "abolish": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^4.1.3",

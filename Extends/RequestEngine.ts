@@ -1,7 +1,7 @@
 import {Abolish} from "abolish";
 import {extendRequestEngine} from "@xpresser/plugin-tools";
 import Validator from "./Validator";
-import {ValidationResult} from "abolish/types/src/Types";
+import {ValidationResult} from "abolish/src/Types";
 
 export = extendRequestEngine((RequestEngineClass) => {
     return class extends RequestEngineClass {
