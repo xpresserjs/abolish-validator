@@ -92,10 +92,10 @@
     lodash.clone "^4.5.0"
     lodash.snakecase "^4.1.1"
 
-abolish@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/abolish/-/abolish-3.1.0.tgz#5b3de0a45077f00cfaa50ce5c61aec89cbf6a381"
-  integrity sha512-zUOIvAD1P67A/lQ+3zmRSEPn0ZUxopItsSUR9VS+LgqsMI9ghJ2vTtn3Swh/HmyHZfrmsHiuccl1jwrDgGGxng==
+abolish@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/abolish/-/abolish-3.1.2.tgz#dfc3438b0dff6dd3d33f53966d1bcc0b5f383938"
+  integrity sha512-DWhQi9vKHo1U6r7M785qaNs7nGpLu/oHW36YkkCbB/LR7UF/L9oSpJYIxzfzxP66HIMuiAQ3fEDnVjYbv5d2vA==
   dependencies:
     lodash.has "^4.5.2"
     lodash.startcase "^4.4.0"
