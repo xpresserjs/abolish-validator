@@ -24,8 +24,7 @@ export = extendRequestEngine((RequestEngineClass) => {
             const body = this.$body.all();
             return this.validate<R>(body, rules);
         }
-
-
+        
         validateAsync<R = Record<string, any>>(object: Record<string, any>, rules: Record<keyof R | string, any>): Promise<ValidationResult<R>> {
             return Validator.validateAsync<R>(object, rules);
         }

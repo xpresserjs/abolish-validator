@@ -1,6 +1,8 @@
 # Xpresser Abolish Plugin
 
-This Plugin uses Abolish to validate your request body and query.
+This Plugin uses [Abolish Object Validator](https://npmjs.org/package/abolish) to validate your request body and query.
+
+Check abolish object validator docs [here](https://npmjs.org/package/abolish)
 
 ```javascript
 class UserController extends ControllerClass {
@@ -17,4 +19,4 @@ class UserController extends ControllerClass {
 }
 ```
 
-##### Documentation comming soon
+##### Documentation coming soon
