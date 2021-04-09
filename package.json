@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@xpresser/plugin-tools": "^1.2.1",
-    "abolish": "^3.2.1"
+    "abolish": "^3.3.0"
   },
   "devDependencies": {
     "typescript": "^4.2.3",
