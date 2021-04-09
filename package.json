@@ -4,6 +4,9 @@
   "description": "Using Abolish validator in xpresserjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "scripts": {
+    "prepare": "npx tsc"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/xpresser/abolish-validator"
