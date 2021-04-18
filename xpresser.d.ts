@@ -4,7 +4,11 @@ import type {Abolish} from "abolish";
 
 declare module "xpresser/types/http" {
     interface Http {
+        abolish: Abolish;
+
         newAbolish(): Abolish
+
+        useAbolish(abolish: Abolish | ((abolish: Abolish) => Abolish)): this;
 
         validate<R = Record<string, any>>(object: Record<string, any>, rules: Record<keyof R | string, any>): ValidationResult<R>
 

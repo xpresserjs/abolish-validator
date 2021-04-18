@@ -1,17 +1,32 @@
-import {Abolish} from "abolish";
 import {extendRequestEngine} from "@xpresser/plugin-tools";
 import Validator from "./Validator";
 import {ValidationResult} from "abolish/src/Types";
+import {Abolish} from "abolish";
 
 export = extendRequestEngine((RequestEngineClass) => {
     return class extends RequestEngineClass {
+        public abolish?: Validator;
 
 
         validate<R = Record<string, any>>(object: Record<string, any>, rules: Record<keyof R | string, any>): ValidationResult<R> {
-            return Validator.validate<R>(object, rules);
+            return (this.abolish || Validator).validate<R>(object, rules);
         }
 
-        newAbolish(): Abolish {
+        validateAsync<R = Record<string, any>>(object: Record<string, any>, rules: Record<keyof R | string, any>): Promise<ValidationResult<R>> {
+            return (this.abolish || Validator).validateAsync<R>(object, rules);
+        }
+
+        useAbolish(abolish: Validator | ((abolish: Validator) => Validator)) {
+            if (abolish instanceof Abolish) {
+                this.abolish = abolish;
+            } else {
+                this.abolish = abolish(new Validator())
+            }
+
+            return this;
+        }
+
+        newAbolish(): Validator {
             return new Validator;
         }
 
@@ -23,10 +38,6 @@ export = extendRequestEngine((RequestEngineClass) => {
         validateBody<R = Record<string, any>>(rules: Record<keyof R | string, any>): ValidationResult<R> {
             const body = this.$body.all();
             return this.validate<R>(body, rules);
-        }
-        
-        validateAsync<R = Record<string, any>>(object: Record<string, any>, rules: Record<keyof R | string, any>): Promise<ValidationResult<R>> {
-            return Validator.validateAsync<R>(object, rules);
         }
 
         validateQueryAsync<R = Record<string, any>>(rules: Record<keyof R | string, any>): Promise<ValidationResult<R>> {
