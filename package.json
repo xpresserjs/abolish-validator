@@ -1,6 +1,6 @@
 {
   "name": "@xpresser/abolish",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "Using Abolish validator in xpresserjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
