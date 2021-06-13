@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "prepare": "npx tsc"
+    "prepare": "npx tsc",
+    "watch": "npx tsc --watch",
+    "test-server": "cd tests && npx ts-node-dev --respawn --transpile-only xpresser.ts"
   },
   "repository": {
     "type": "git",
@@ -15,10 +17,11 @@
   "license": "MIT",
   "dependencies": {
     "@xpresser/plugin-tools": "^1.2.1",
-    "abolish": "^4.1.0"
+    "abolish": "^4.1.0",
+    "ts-node-dev": "^1.1.6"
   },
   "devDependencies": {
     "typescript": "^4.2.3",
-    "xpresser": "^0.12.1"
+    "xpresser": "^0.16.1"
   }
 }

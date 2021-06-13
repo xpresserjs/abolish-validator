@@ -21,5 +21,7 @@ declare module "xpresser/types/http" {
         validateQueryAsync<R = Record<string, any>>(rules: Record<keyof R | string, any>): Promise<ValidationResult<R>>
 
         validateBodyAsync<R = Record<string, any>>(rules: Record<keyof R | string, any>): Promise<ValidationResult<R>>
+
+        validatedBody<R = Record<string, any>>(): R
     }
 }

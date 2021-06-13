@@ -49,6 +49,10 @@ export = extendRequestEngine((RequestEngineClass) => {
             const body = this.$body.all();
             return this.validateAsync<R>(body, rules);
         }
+
+        validatedBody<R = Record<string, any>>(): R {
+            return this.state.get("validatedBody", {})
+        }
     }
 });
 
