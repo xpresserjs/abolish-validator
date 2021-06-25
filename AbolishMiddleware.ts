@@ -33,12 +33,16 @@ if (pluginConfig.get("validationRules.enabled", false)) {
  * AbolishMiddleware
  */
 export = async (http: Http): Promise<any> => {
-    // Only for POST & PATCH REQUESTS
-    if (!["POST", "PATCH"].includes(http.req.method.toUpperCase())) {
+    // Only for POST, PUT & PATCH REQUESTS
+    const method = http.req.method.toUpperCase();
+    if (!["POST", "PATCH", "PUT"].includes(method)) {
         return http.next();
     }
 
-    let rules = (ValidationRules as any)[http.req.route?.path || http.req.path];
+    if(!ValidationRules.hasOwnProperty(method))
+        return http.next();
+
+    let rules = ValidationRules[method][http.req.route?.path || http.req.path];
 
     // Parse if function.
     if (typeof rules === "function") {

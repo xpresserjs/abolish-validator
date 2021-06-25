@@ -1,7 +1,11 @@
 import {ValidateRoutes} from "../";
 
-export = ValidateRoutes({
-    "/": {
-        name: "required",
+const routes = ValidateRoutes({
+    POST: {
+        "/": {
+            name: "required",
+        }
     }
 })
+
+export = routes;

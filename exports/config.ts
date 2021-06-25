@@ -10,7 +10,7 @@ export = ($: DollarSign) => ({
      * Your ValidationRule file will be loaded
      */
     validationRules: {
-        enabled: false,
+        enabled: true,
         // Validation File Path
         file: "backend://ValidationRules",
         // On Validation Error

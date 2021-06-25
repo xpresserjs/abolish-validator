@@ -25,35 +25,45 @@ export function run(config: any, $: DollarSign) {
     })
 }
 
+type ValidateRoutesArgType = Record<string, Record<string, any> | ((http: Http) => Record<string, any>)>
+
 /**
  * ValidateRoutes
  * Parse all rules for performance purposes.
- * @param rules
  * @constructor
+ * @param methods
  */
 export function ValidateRoutes(
-    rules: Record<string, Record<string, any> | ((http: Http) => Record<string, any>)>
+    methods: {
+        POST?: ValidateRoutesArgType,
+        PUT?: ValidateRoutesArgType,
+        PATCH?: ValidateRoutesArgType
+    }
 ) {
     // New rules holder
     let parsedRules: Record<string, any> = {};
 
-    /**
-     * Loop through rules, find controllers and replace with path.
-     */
-    for (let rule in rules) {
-        if (!rules.hasOwnProperty(rule)) continue;
+    for (let method in methods) {
+        const rules = (methods as any)[method]
+        parsedRules[method] = {};
+        /**
+         * Loop through rules, find controllers and replace with path.
+         */
+        for (let rule in rules) {
+            if (!rules.hasOwnProperty(rule)) continue;
 
-        // Get and Check rule
-        const thisRule = rules[rule];
+            // Get and Check rule
+            const thisRule = rules[rule];
 
-        // if is controller
-        if (rule[0] !== "/" && rule.toLowerCase().includes("@"))
-            // use path of controller instead
-            rule = ControllerToPath(rule);
+            // if is controller
+            if (rule[0] !== "/" && rule.toLowerCase().includes("@"))
+                // use path of controller instead
+                rule = ControllerToPath(rule);
 
-        // Else use as it is.
-        parsedRules[rule] =
-            typeof thisRule === "function" ? thisRule : ParseRules(thisRule);
+            // Else use as it is.
+            parsedRules[method][rule] =
+                typeof thisRule === "function" ? thisRule : ParseRules(thisRule);
+        }
     }
 
     // Return ParsedRules.
