@@ -88,6 +88,12 @@ export function ValidateRoutes(
  * @constructor
  */
 function ControllerToPath(controller: string) {
+    // Add Controller to string if not exists.
+    if (!controller.toLowerCase().includes('controller@')) {
+        const c = controller.split('@')
+        c[0] = c[0] + 'Controller';
+        controller = c.join('@')
+    }
 
     const find = routes.filter((route) => route.controller === controller);
 

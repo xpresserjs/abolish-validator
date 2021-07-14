@@ -1,9 +1,26 @@
 import {Obj} from "object-collection/exports";
 import {ValidateRoutes, AbolishRoutesMethods, AbolishRoutesRule} from "./index";
 
+type AbolishMergeSource = Record<string, any> | AbolishRoutes;
 
 class AbolishRoutes {
     #rules = Obj({});
+
+    /**
+     * Merge multiple abolish routes instances
+     * @param sources
+     */
+    static many(sources: AbolishMergeSource | AbolishMergeSource[]) {
+        if (!Array.isArray(sources)) {
+            return new AbolishRoutes().merge(sources);
+        }
+
+        // Create new instance and merge all sources
+        const abolishRoutes = new AbolishRoutes();
+        sources.forEach(source => abolishRoutes.merge(source));
+
+        return abolishRoutes;
+    }
 
     /**
      * Validate Post Request
@@ -39,7 +56,7 @@ class AbolishRoutes {
      * Merge another Abolish Route Instance.
      * @param source
      */
-    merge(source: Record<string, any> | AbolishRoutes) {
+    merge(source: AbolishMergeSource) {
         this.#rules.merge(
             source instanceof AbolishRoutes ? source.compileRules() : source
         );
