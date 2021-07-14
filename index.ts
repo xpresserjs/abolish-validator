@@ -2,13 +2,20 @@ import {DollarSign} from "xpresser/types";
 import {pluginConfig} from "./plugin-config"
 import {Http} from "xpresser/types/http";
 import {ParseRules} from "abolish";
-import {getInstance} from "xpresser";
 
-const $ = getInstance()
+let $: DollarSign;
 let routes: any[] = [];
 
-export function run(config: any, $: DollarSign) {
+/**
+ * Xpresser Run Plugin Function
+ * @param config
+ * @param $dollarSign
+ */
+export function run(config: any, $dollarSign: DollarSign) {
+    // Set DollarSign
+    $ = $dollarSign;
 
+    // Load abolish Extender
     $.on.boot(next => {
         const Validator = require("./Extends/Validator");
 
@@ -19,13 +26,22 @@ export function run(config: any, $: DollarSign) {
         return next()
     });
 
+    // Load Processed Routes
     $.on.bootServer((next) => {
         routes = $.routerEngine.allProcessedRoutes();
         return next();
     })
 }
 
-type ValidateRoutesArgType = Record<string, Record<string, any> | ((http: Http) => Record<string, any>)>
+
+export type AbolishRoutesRule = Record<string, any> | ((http: Http) => Record<string, any>)
+export type AbolishRoutesRules = Record<string, AbolishRoutesRule>
+export type AbolishRoutesMethods = {
+    POST?: AbolishRoutesRules,
+    PUT?: AbolishRoutesRules,
+    PATCH?: AbolishRoutesRules
+}
+
 
 /**
  * ValidateRoutes
@@ -34,18 +50,14 @@ type ValidateRoutesArgType = Record<string, Record<string, any> | ((http: Http) 
  * @param methods
  */
 export function ValidateRoutes(
-    methods: {
-        POST?: ValidateRoutesArgType,
-        PUT?: ValidateRoutesArgType,
-        PATCH?: ValidateRoutesArgType
-    }
-) {
+    methods: AbolishRoutesMethods
+): AbolishRoutesMethods {
     // New rules holder
     let parsedRules: Record<string, any> = {};
 
-    for (let method in methods) {
-        const rules = (methods as any)[method]
-        parsedRules[method] = {};
+    for (let [method, rules] of Object.entries(methods)) {
+
+        parsedRules[method] = {} as AbolishRoutesRules;
         /**
          * Loop through rules, find controllers and replace with path.
          */
@@ -67,7 +79,7 @@ export function ValidateRoutes(
     }
 
     // Return ParsedRules.
-    return parsedRules;
+    return parsedRules as AbolishRoutesMethods;
 }
 
 /**
@@ -92,3 +104,4 @@ function ControllerToPath(controller: string) {
 
     return find[0].path;
 }
+

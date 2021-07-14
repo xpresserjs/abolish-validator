@@ -1,6 +1,7 @@
 import {Http} from "xpresser/types/http";
 import {getInstance} from "xpresser";
 import {pluginConfig} from "./plugin-config";
+import AbolishRoutes from "./AbolishRoutes";
 
 const $ = getInstance()
 const ValidationRulesPath = pluginConfig.get("validationRules.file")
@@ -11,14 +12,24 @@ let ValidationRules: any = {};
 /**
  * Load Validation rules file before we boot server;
  */
+
 if (pluginConfig.get("validationRules.enabled", false)) {
     $.on.bootServer((next) => {
         // Require Validation rules.
         try {
+
             ValidationRules = require($.path.resolve(ValidationRulesPath));
 
-            if (typeof ValidationRules !== "object") {
+
+            if (!ValidationRules || typeof ValidationRules !== "object") {
                 return $.logErrorAndExit(`ValidationRules File must return an object!`)
+            }
+
+            if (
+                ValidationRules instanceof AbolishRoutes
+                || typeof (ValidationRules as AbolishRoutes).compileRules === "function"
+            ) {
+                ValidationRules = ValidationRules.compileRules();
             }
 
         } catch (e) {
@@ -39,7 +50,7 @@ export = async (http: Http): Promise<any> => {
         return http.next();
     }
 
-    if(!ValidationRules.hasOwnProperty(method))
+    if (!ValidationRules.hasOwnProperty(method))
         return http.next();
 
     let rules = ValidationRules[method][http.req.route?.path || http.req.path];

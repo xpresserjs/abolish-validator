@@ -1,11 +1,7 @@
-import {ValidateRoutes} from "../";
+import AbolishRoutes from "../dist/AbolishRoutes";
 
-const routes = ValidateRoutes({
-    POST: {
-        "/": {
-            name: "required",
-        }
-    }
-})
+const routes = new AbolishRoutes();
+
+routes.post("/", {name: "required"})
 
 export = routes;
