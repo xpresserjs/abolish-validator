@@ -1,8 +1,6 @@
 import {Obj} from "object-collection/exports";
-import {ValidateRoutes, AbolishRoutesMethods} from "./index";
-import {Http} from "xpresser/types/http";
+import {ValidateRoutes, AbolishRoutesMethods, AbolishRoutesRule} from "./index";
 
-type rules = Record<string, any> | ((http: Http) => Record<string, any>);
 
 class AbolishRoutes {
     #rules = Obj({});
@@ -12,7 +10,7 @@ class AbolishRoutes {
      * @param action
      * @param rules
      */
-    post(action: string, rules: rules) {
+    post(action: string, rules: AbolishRoutesRule) {
         this.#rules.path("POST").set(action, rules);
         return this;
     }
@@ -22,7 +20,7 @@ class AbolishRoutes {
      * @param action
      * @param rules
      */
-    put(action: string, rules: rules) {
+    put(action: string, rules: AbolishRoutesRule) {
         this.#rules.path("PUT").set(action, rules);
         return this;
     }
@@ -32,7 +30,7 @@ class AbolishRoutes {
      * @param action
      * @param rules
      */
-    patch(action: string, rules: rules) {
+    patch(action: string, rules: AbolishRoutesRule) {
         this.#rules.path("PATCH").set(action, rules);
         return this;
     }
