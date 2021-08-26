@@ -2,6 +2,7 @@ import {DollarSign} from "xpresser/types";
 import {pluginConfig} from "./plugin-config"
 import {Http} from "xpresser/types/http";
 import {ParseRules} from "abolish";
+import Validator from "./Extends/Validator";
 
 let $: DollarSign;
 let routes: any[] = [];
@@ -15,22 +16,37 @@ export function run(config: any, $dollarSign: DollarSign) {
     // Set DollarSign
     $ = $dollarSign;
 
-    // Load abolish Extender
-    $.on.boot(next => {
-        const Validator = require("./Extends/Validator");
+    /**
+     * Skip connecting to db when running native xpresser commands
+     */
+    const isNativeCommand = (
+        $.engineData.get("LaunchType") === "cli" &&
+        process.argv[3] &&
+        process.argv[3].substr(0, 5) === "make:"
+    );
 
-        if (pluginConfig.has('extendAbolish')) {
-            pluginConfig.all().extendAbolish(Validator);
-        }
 
-        return next()
-    });
+    if (!isNativeCommand) {
+        // Load abolish Extender
+        $.on.boot(next => {
 
-    // Load Processed Routes
-    $.on.bootServer((next) => {
-        routes = $.routerEngine.allProcessedRoutes();
-        return next();
-    })
+            const Validator = require("./Extends/Validator");
+
+            if (pluginConfig.has('extendAbolish')) {
+                pluginConfig.all().extendAbolish(Validator);
+            }
+
+            return next()
+        });
+
+        // Load Processed Routes
+        $.on.bootServer((next) => {
+            routes = $.routerEngine.allProcessedRoutes();
+            return next();
+        })
+    }
+
+
 }
 
 
