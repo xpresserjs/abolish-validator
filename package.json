@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@xpresser/plugin-tools": "^1.2.1",
-    "abolish": "^4.5.2"
+    "abolish": "^4.5.3"
   },
   "devDependencies": {
     "ts-node-dev": "^1.1.8",
