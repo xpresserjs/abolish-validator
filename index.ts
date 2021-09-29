@@ -2,7 +2,6 @@ import {DollarSign} from "xpresser/types";
 import {pluginConfig} from "./plugin-config"
 import {Http} from "xpresser/types/http";
 import {ParseRules} from "abolish";
-import Validator from "./Extends/Validator";
 
 let $: DollarSign;
 let routes: any[] = [];

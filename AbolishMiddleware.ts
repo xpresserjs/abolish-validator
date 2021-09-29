@@ -32,7 +32,7 @@ if (pluginConfig.get("validationRules.enabled", false)) {
                 ValidationRules = ValidationRules.compileRules();
             }
 
-        } catch (e) {
+        } catch (e: any) {
             return $.logErrorAndExit(e.message)
         }
 

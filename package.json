@@ -17,11 +17,16 @@
   "license": "MIT",
   "dependencies": {
     "@xpresser/plugin-tools": "^1.2.1",
-    "abolish": "^4.4.0",
-    "ts-node-dev": "^1.1.8"
+    "abolish": "^4.5.2"
   },
   "devDependencies": {
-    "typescript": "^4.3.5",
-    "xpresser": "^0.18.1"
-  }
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.3",
+    "xpresser": "^0.22.3"
+  },
+  "keywords": [
+    "xpresser",
+    "xpresser-plugin",
+    "abolish"
+  ]
 }
