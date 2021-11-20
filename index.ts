@@ -1,4 +1,4 @@
-import {DollarSign} from "xpresser/types";
+import {DollarSign, PluginData} from "xpresser/types";
 import {pluginConfig} from "./plugin-config"
 import {Http} from "xpresser/types/http";
 import {ParseRules} from "abolish";
@@ -9,43 +9,32 @@ let routes: any[] = [];
 /**
  * Xpresser Run Plugin Function
  * @param config
- * @param $dollarSign
+ * @param $
  */
-export function run(config: any, $dollarSign: DollarSign) {
-    // Set DollarSign
-    $ = $dollarSign;
-
+export function run(config: PluginData, $: DollarSign) {
     /**
      * Skip connecting to db when running native xpresser commands
      */
-    const isNativeCommand = (
-        $.engineData.get("LaunchType") === "cli" &&
-        process.argv[3] &&
-        process.argv[3].substr(0, 5) === "make:"
-    );
+    if ($.isNativeCliCommand()) return;
 
 
-    if (!isNativeCommand) {
-        // Load abolish Extender
-        $.on.boot(next => {
+    // Load abolish Extender
+    $.on.boot(next => {
 
-            const Validator = require("./Extends/Validator");
+        const Validator = require("./Extends/Validator");
 
-            if (pluginConfig.has('extendAbolish')) {
-                pluginConfig.all().extendAbolish(Validator);
-            }
+        if (pluginConfig.has('extendAbolish')) {
+            pluginConfig.all().extendAbolish(Validator);
+        }
 
-            return next()
-        });
+        return next()
+    });
 
-        // Load Processed Routes
-        $.on.bootServer((next) => {
-            routes = $.routerEngine.allProcessedRoutes();
-            return next();
-        })
-    }
-
-
+    // Load Processed Routes
+    $.on.bootServer((next) => {
+        routes = $.routerEngine.allProcessedRoutes();
+        return next();
+    })
 }
 
 
