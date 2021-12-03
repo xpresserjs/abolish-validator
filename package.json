@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/xpresser/abolish-validator"
+    "url": "https://github.com/xpresserjs/abolish-validator"
   },
   "author": "xpresserjs",
   "license": "MIT",
