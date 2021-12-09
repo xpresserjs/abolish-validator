@@ -17,34 +17,31 @@ export function run(config: PluginData, $: DollarSign) {
      */
     if ($.isNativeCliCommand()) return;
 
-
     // Load abolish Extender
-    $.on.boot(next => {
+    $.on.boot((next) => {
         const Validator = require("./Extends/Validator");
 
-        if (pluginConfig.has('extendAbolish')) {
+        if (pluginConfig.has("extendAbolish")) {
             pluginConfig.all().extendAbolish(Validator);
         }
 
-        return next()
+        return next();
     });
 
     // Load Processed Routes
     $.on.bootServer((next) => {
         routes = $.routerEngine.allProcessedRoutes();
         return next();
-    })
+    });
 }
 
-
-export type AbolishRoutesRule = Record<string, any> | ((http: Http) => Record<string, any>)
-export type AbolishRoutesRules = Record<string, AbolishRoutesRule>
+export type AbolishRoutesRule = Record<string, any> | ((http: Http) => Record<string, any>);
+export type AbolishRoutesRules = Record<string, AbolishRoutesRule>;
 export type AbolishRoutesMethods = {
-    POST?: AbolishRoutesRules,
-    PUT?: AbolishRoutesRules,
-    PATCH?: AbolishRoutesRules
-}
-
+    POST?: AbolishRoutesRules;
+    PUT?: AbolishRoutesRules;
+    PATCH?: AbolishRoutesRules;
+};
 
 /**
  * ValidateRoutes
@@ -52,14 +49,11 @@ export type AbolishRoutesMethods = {
  * @constructor
  * @param methods
  */
-export function ValidateRoutes(
-    methods: AbolishRoutesMethods
-): AbolishRoutesMethods {
+export function ValidateRoutes(methods: AbolishRoutesMethods): AbolishRoutesMethods {
     // New rules holder
     let parsedRules: Record<string, any> = {};
 
     for (let [method, rules] of Object.entries(methods)) {
-
         parsedRules[method] = {} as AbolishRoutesRules;
         /**
          * Loop through rules, find controllers and replace with path.
@@ -92,18 +86,16 @@ export function ValidateRoutes(
  */
 function ControllerToPath(controller: string) {
     // Add Controller to string if not exists.
-    if (!controller.toLowerCase().includes('controller@')) {
-        const c = controller.split('@')
-        c[0] = c[0] + 'Controller';
-        controller = c.join('@')
+    if (!controller.toLowerCase().includes("controller@")) {
+        const c = controller.split("@");
+        c[0] = c[0] + "Controller";
+        controller = c.join("@");
     }
 
     const find = routes.filter((route) => route.controller === controller);
 
     if (!find.length)
-        return $.logErrorAndExit(
-            `Validation Rules: Controller {${controller}} controller found.`
-        );
+        return $.logErrorAndExit(`Validation Rules: Controller {${controller}} controller found.`);
 
     if (find.length > 1) {
         return $.logErrorAndExit(
@@ -113,4 +105,3 @@ function ControllerToPath(controller: string) {
 
     return find[0].path;
 }
-
