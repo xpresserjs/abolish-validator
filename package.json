@@ -20,9 +20,10 @@
     "abolish": "^4.7.0"
   },
   "devDependencies": {
+    "prettier": "^2.5.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.2",
-    "xpresser": "^0.24.0"
+    "xpresser": "^0.25.4"
   },
   "keywords": [
     "xpresser",

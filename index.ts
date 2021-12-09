@@ -1,7 +1,7 @@
-import {DollarSign, PluginData} from "xpresser/types";
-import {pluginConfig} from "./plugin-config"
-import {Http} from "xpresser/types/http";
-import {ParseRules} from "abolish";
+import { DollarSign, PluginData } from "xpresser/types";
+import { pluginConfig } from "./plugin-config";
+import { Http } from "xpresser/types/http";
+import { ParseRules } from "abolish";
 
 let $: DollarSign;
 let routes: any[] = [];
@@ -20,7 +20,6 @@ export function run(config: PluginData, $: DollarSign) {
 
     // Load abolish Extender
     $.on.boot(next => {
-
         const Validator = require("./Extends/Validator");
 
         if (pluginConfig.has('extendAbolish')) {
