@@ -90,6 +90,7 @@
   "exclude": [
     "types",
     "tests",
-    "dist"
+    "dist",
+    "xpresser.d.ts"
   ]
 }

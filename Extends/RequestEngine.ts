@@ -104,3 +104,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
 }
 
 export = AbolishRequestEngine;
+
+declare module "xpresser/types/http" {
+    interface Http extends AbolishRequestEngine {}
+}
