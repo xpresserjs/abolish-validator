@@ -16,10 +16,10 @@
   "author": "xpresserjs",
   "license": "MIT",
   "dependencies": {
-    "@xpresser/plugin-tools": "^1.2.1",
-    "abolish": "^4.7.0"
+    "@xpresser/plugin-tools": "^1.2.1"
   },
   "devDependencies": {
+    "abolish": "^4.7.0",
     "prettier": "^2.5.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.2",

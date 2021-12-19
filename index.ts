@@ -6,6 +6,10 @@ import { ParseRules } from "abolish";
 let $: DollarSign;
 let routes: any[] = [];
 
+export function dependsOn() {
+    return ["abolish"];
+}
+
 /**
  * Xpresser Run Plugin Function
  * @param config
