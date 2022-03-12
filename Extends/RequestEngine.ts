@@ -99,7 +99,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
      * Get validated body data.
      */
     validatedBody<R = Record<string, any>>(): R {
-        return this.state.get("validatedBody", {});
+        return this.state.get<R>("validatedBody", {} as R);
     }
 }
 
