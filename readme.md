@@ -91,10 +91,9 @@ To register the Middleware, add the following to your `use.json` file:
 ### Add Validation Routes Files
 Create a file @ `backend/ValidationRules.(js|ts)` and add the following to it:
 
-```typescript
-import AbolishRoutes from "@xpresser/abolish/dist/AbolishRoutes"; // (TypeScript)
-// or 
-const AbolishRoutes = require("@xpresser/abolish/dist/AbolishRoutes"); // (NodeJS)
+##### JS
+```javascript
+const AbolishRoutes = require("@xpresser/abolish/dist/AbolishRoutes");
 
 // ===== Initialize AbolishRoutes =====
 const routes = new AbolishRoutes();
@@ -110,10 +109,27 @@ routes.post("AuthController@login", {
     password: "required|min:6"
 });
 
-// ===== Export Defined Routes =====
-export = routes; // (Typscript)
-// or
-module.exports = routes; // (NodeJS)
+module.exports = routes;
+```
+##### TS
+```typescript
+import AbolishRoutes from "@xpresser/abolish/dist/AbolishRoutes";
+
+// ===== Initialize AbolishRoutes =====
+const routes = new AbolishRoutes();
+
+// ===== Define validation for Routes =====
+// ===== Syntax =====
+routes["post" | "patch" | "put"]("Controller@action", rules);
+routes["post" | "patch" | "put"]("/exact/path/to/route", rules);
+
+// ===== Example =====
+routes.post("AuthController@login", {
+    email: "required|email",
+    password: "required|min:6"
+});
+
+export = routes;
 ```
 
 
