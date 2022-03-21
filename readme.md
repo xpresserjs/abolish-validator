@@ -88,6 +88,16 @@ To register the Middleware, add the following to your `use.json` file:
 }
 ```
 
+Or add it globally:
+
+```json
+{
+  "globalMiddlewares": [
+    "npm://@xpresser/abolish/dist/AbolishMiddleware.js"
+  ]
+}
+```
+
 ### Add Validation Routes Files
 Create a file @ `backend/ValidationRules.(js|ts)` and add the following to it:
 
