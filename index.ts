@@ -3,7 +3,7 @@ import { pluginConfig } from "./plugin-config";
 import { Http } from "xpresser/types/http";
 import { ParseRules } from "abolish";
 
-let $: DollarSign;
+let dollarSign: DollarSign;
 let routes: any[] = [];
 
 export function dependsOn() {
@@ -16,6 +16,8 @@ export function dependsOn() {
  * @param $
  */
 export function run(config: PluginData, $: DollarSign) {
+    dollarSign = $;
+
     /**
      * Skip connecting to db when running native xpresser commands
      */
@@ -23,11 +25,22 @@ export function run(config: PluginData, $: DollarSign) {
 
     // Load abolish Extender
     $.on.boot((next) => {
-        const Validator = require("./Extends/Validator");
+        const { Abolish } = require("abolish");
 
         if (pluginConfig.has("extendAbolish")) {
-            pluginConfig.all().extendAbolish(Validator);
+            $.logDeprecated("1.11.1", "1.11.1", [
+                "Abolish Config: `extendAbolish` is now deprecated, please rename the function to `provideAbolish` instead"
+            ]);
+
+            $.logErrorAndExit("Make changes and restart server to apply changes");
         }
+
+        let providedAbolish = Abolish;
+        if (pluginConfig.has("provideAbolish")) {
+            providedAbolish = pluginConfig.all().provideAbolish();
+        }
+
+        $.engineData.set("getProvidedAbolish", () => providedAbolish);
 
         return next();
     });
@@ -35,6 +48,7 @@ export function run(config: PluginData, $: DollarSign) {
     // Load Processed Routes
     $.on.bootServer((next) => {
         routes = $.routerEngine.allProcessedRoutes();
+
         return next();
     });
 }
@@ -89,6 +103,8 @@ export function ValidateRoutes(methods: AbolishRoutesMethods): AbolishRoutesMeth
  * @constructor
  */
 function ControllerToPath(controller: string) {
+    const $ = dollarSign;
+
     // Add Controller to string if not exists.
     if (!controller.toLowerCase().includes("controller@")) {
         const c = controller.split("@");

@@ -1,15 +1,16 @@
-import Validator from "./Validator";
-import { ValidationResult } from "abolish/src/Types";
+import type { ValidationResult } from "abolish/src/Types";
 import type { Abolish } from "abolish";
 import { getInstance } from "xpresser";
 
 const $ = getInstance();
+// Get provided Abolish Class
+const ProvidedAbolish = $.engineData.call<typeof Abolish>("getProvidedAbolish");
 
 class AbolishRequestEngine extends $.extendedRequestEngine() {
     /**
      * Initialize abolish instance
      */
-    public abolish = new Validator();
+    public abolish = new ProvidedAbolish();
 
     /**
      * Validate data
@@ -20,7 +21,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
         object: Record<string, any>,
         rules: Record<keyof R | string, any>
     ): ValidationResult<R> {
-        return (this.abolish || Validator).validate<R>(object, rules);
+        return (this.abolish || ProvidedAbolish).validate<R>(object, rules);
     }
 
     /**
@@ -32,7 +33,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
         object: Record<string, any>,
         rules: Record<keyof R | string, any>
     ): Promise<ValidationResult<R>> {
-        return (this.abolish || Validator).validateAsync<R>(object, rules);
+        return (this.abolish || ProvidedAbolish).validateAsync<R>(object, rules);
     }
 
     /**
@@ -47,8 +48,8 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
     /**
      * Get new validator instance
      */
-    newAbolish(): Validator {
-        return new Validator();
+    newAbolish(): Abolish {
+        return new ProvidedAbolish();
     }
 
     /**

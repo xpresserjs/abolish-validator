@@ -19,7 +19,7 @@
     "@xpresser/plugin-tools": "^1.2.1"
   },
   "devDependencies": {
-    "abolish": "^4.8.15",
+    "abolish": "^4.8.21",
     "prettier": "^2.5.1",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.6.2",

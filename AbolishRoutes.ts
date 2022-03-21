@@ -1,5 +1,5 @@
-import {Obj} from "object-collection/exports";
-import {ValidateRoutes, AbolishRoutesMethods, AbolishRoutesRule} from "./index";
+import { Obj } from "object-collection/exports";
+import { AbolishRoutesMethods, AbolishRoutesRule, ValidateRoutes } from "./index";
 
 type AbolishMergeSource = Record<string, any> | AbolishRoutes;
 
@@ -17,7 +17,7 @@ class AbolishRoutes {
 
         // Create new instance and merge all sources
         const abolishRoutes = new AbolishRoutes();
-        sources.forEach(source => abolishRoutes.merge(source));
+        sources.forEach((source) => abolishRoutes.merge(source));
 
         return abolishRoutes;
     }
@@ -57,14 +57,12 @@ class AbolishRoutes {
      * @param source
      */
     merge(source: AbolishMergeSource) {
-        this.#rules.merge(
-            source instanceof AbolishRoutes ? source.compileRules() : source
-        );
+        this.#rules.merge(source instanceof AbolishRoutes ? source.compileRules() : source);
         return this;
     }
 
     rules(): AbolishRoutesMethods {
-        return this.#rules.data
+        return this.#rules.data;
     }
 
     compileRules(): AbolishRoutesMethods {

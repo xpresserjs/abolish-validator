@@ -1,7 +1,8 @@
-import {DollarSign} from "xpresser/types";
-import {Abolish} from "abolish";
-import {Http} from "xpresser/types/http";
-import AbolishError from "abolish/src/AbolishError";
+import { DollarSign } from "xpresser/types";
+import { Http } from "xpresser/types/http";
+import { Abolish } from "abolish";
+import { ValidationError } from "abolish/src/Types";
+import { registerAllValidators } from "abolish/src/ValidatorHelpers";
 
 export = ($: DollarSign) => ({
     /**
@@ -14,19 +15,22 @@ export = ($: DollarSign) => ({
         // Validation File Path
         file: "backend://ValidationRules",
         // On Validation Error
-        onError(http: Http, err: AbolishError) {
-            return http.status(400).json({error: err.message});
+        onError(http: Http, err: ValidationError) {
+            return http.status(400).json({ error: err.message });
         }
     },
 
-
     /**
-     * Abolish Instance Extender.
-     * @param Validator
+     * Provide Abolish.
+     * The Abolish Class returned here will be used for validation.
+     * This method also gives you the opportunity to extend Abolish
+     * Or provide a custom class to be used.
      */
-    extendAbolish: (Validator: typeof Abolish): typeof Abolish => {
-        // Extend Abolish here.
+    provideAbolish: (): typeof Abolish => {
+        // Uncomment below if you don't want to use all abolish validators.
+        registerAllValidators(Abolish);
 
-        return Validator;
+        // Provide Abolish.
+        return Abolish;
     }
-})
+});

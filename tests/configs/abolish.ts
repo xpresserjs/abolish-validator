@@ -1,6 +1,6 @@
 import { Abolish } from "abolish";
 import { Http } from "xpresser/types/http";
-import AbolishError from "abolish/src/AbolishError";
+import { ValidationError } from "abolish/src/Types";
 
 export = () => ({
     /**
@@ -13,19 +13,18 @@ export = () => ({
         // Validation File Path
         file: "backend://ValidationRules",
         // On Validation Error
-        onError(http: Http, err: AbolishError) {
+        onError(http: Http, err: ValidationError) {
             return http.status(400).json({ error: err.message });
         }
     },
 
     /**
-     * Abolish Instance Extender.
-     * @param Validator
+     * Provide Abolish Extender.
      */
-    extendAbolish: (Validator: typeof Abolish): typeof Abolish => {
+    provideAbolish: (): typeof Abolish => {
         // Add abolish string validators
-        Validator.addGlobalValidators(require("abolish/validators/string"));
+        Abolish.addGlobalValidators(require("abolish/validators/string"));
 
-        return Validator;
+        return Abolish;
     }
 });

@@ -1,4 +1,4 @@
-import {Controller} from "xpresser/types/http";
+import { Controller } from "xpresser/types/http";
 
 export = <Controller.Object>{
     name: "AppController",
@@ -8,10 +8,10 @@ export = <Controller.Object>{
     },
 
     index(http) {
-        return http.view("index")
+        return http.view("index");
     },
 
-    login(http){
-        return http.validatedBody()
+    login(http) {
+        return http.validatedBody();
     }
-}
+};
