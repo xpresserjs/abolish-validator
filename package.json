@@ -16,7 +16,7 @@
   "author": "xpresserjs",
   "license": "MIT",
   "dependencies": {
-    "@xpresser/plugin-tools": "^1.2.1"
+    "@xpresser/plugin-tools": "^1.2.5"
   },
   "devDependencies": {
     "abolish": "^4.11.2",
