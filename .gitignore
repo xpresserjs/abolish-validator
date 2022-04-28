@@ -4,3 +4,6 @@ dist
 types
 yarn.lock
 *.log
+
+*.d.ts
+*.js

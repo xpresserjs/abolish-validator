@@ -1,10 +1,11 @@
-import AbolishRoutes from "../dist/AbolishRoutes";
+// @ts-ignore
+import RoutesGuard from "../RoutesGuard";
 
-const routes = new AbolishRoutes();
+const guard = new RoutesGuard();
 
-routes.post("App@login", {
+guard.post("App@login", {
     email: "required|email",
     username: "required|alphaNumeric"
 });
 
-export = routes;
+export = guard;

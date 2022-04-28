@@ -1,7 +1,7 @@
-import { Http } from "xpresser/types/http";
-import { getInstance } from "xpresser";
-import { pluginConfig } from "./plugin-config";
-import AbolishRoutes from "./AbolishRoutes";
+import {Http} from "xpresser/types/http";
+import {getInstance} from "xpresser";
+import {pluginConfig} from "./plugin-config";
+import RoutesGuard from "./RoutesGuard";
 
 const $ = getInstance();
 const ValidationRulesPath = pluginConfig.get("validationRules.file");
@@ -24,8 +24,8 @@ if (pluginConfig.get("validationRules.enabled", false)) {
             }
 
             if (
-                ValidationRules instanceof AbolishRoutes ||
-                typeof (ValidationRules as AbolishRoutes).compileRules === "function"
+                ValidationRules instanceof RoutesGuard ||
+                typeof (ValidationRules as RoutesGuard).compileRules === "function"
             ) {
                 ValidationRules = ValidationRules.compileRules();
             }

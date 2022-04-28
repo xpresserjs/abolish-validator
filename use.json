@@ -1,12 +1,12 @@
 {
   "xpresser": ">=0.25.4",
   "namespace": "abolish",
-  "use_index": "dist/index.js",
+  "use_index": "index.js",
   "extends": {
-    "RequestEngine": "dist/Extends/RequestEngine.js"
+    "RequestEngine": "Extends/RequestEngine.js"
   },
   "importable": {
-    "configs": "dist/exports/config.js",
+    "configs": "exports/config.js",
     "configs.ts": "exports/config.ts"
   }
 }

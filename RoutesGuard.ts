@@ -1,20 +1,10 @@
-import {$} from "./plugin-config";
 import {Obj} from "object-collection/exports";
 import {RoutesGuardMethods, RoutesGuardRule, ValidateRoutes} from "./index";
 
-type AbolishMergeSource = Record<string, any> | AbolishRoutes;
+type AbolishMergeSource = Record<string, any> | RoutesGuard;
 
-class AbolishRoutes {
+class RoutesGuard {
     #rules = Obj({});
-
-    constructor() {
-        $.logDeprecated("1.12.0", "1.13.0", [
-            `Class {{AbolishRoutes}} is deprecated. Use {{RoutesGuard}} instead.`,
-            null,
-            `{{RoutesGuard}} can be imported from: {{"@xpresser/abolish/RoutesGuard"}}`
-        ], true);
-        console.trace()
-    }
 
     /**
      * Merge multiple abolish routes instances
@@ -22,14 +12,14 @@ class AbolishRoutes {
      */
     static many(sources: AbolishMergeSource | AbolishMergeSource[]) {
         if (!Array.isArray(sources)) {
-            return new AbolishRoutes().merge(sources);
+            return new RoutesGuard().merge(sources);
         }
 
         // Create new instance and merge all sources
-        const abolishRoutes = new AbolishRoutes();
-        sources.forEach((source) => abolishRoutes.merge(source));
+        const guard = new RoutesGuard();
+        sources.forEach((source) => guard.merge(source));
 
-        return abolishRoutes;
+        return guard;
     }
 
     /**
@@ -67,17 +57,23 @@ class AbolishRoutes {
      * @param source
      */
     merge(source: AbolishMergeSource) {
-        this.#rules.merge(source instanceof AbolishRoutes ? source.compileRules() : source);
+        this.#rules.merge(source instanceof RoutesGuard ? source.compileRules() : source);
         return this;
     }
 
+    /**
+     * Return rules data
+     */
     rules(): RoutesGuardMethods {
         return this.#rules.data;
     }
 
+    /**
+     * Compile rules
+     */
     compileRules(): RoutesGuardMethods {
         return ValidateRoutes(this.#rules.data);
     }
 }
 
-export = AbolishRoutes;
+export = RoutesGuard;

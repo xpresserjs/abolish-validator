@@ -1,7 +1,7 @@
-import { DollarSign, PluginData } from "xpresser/types";
-import { pluginConfig } from "./plugin-config";
-import { Http } from "xpresser/types/http";
-import { ParseRules } from "abolish";
+import {DollarSign, PluginData} from "xpresser/types";
+import {pluginConfig} from "./plugin-config";
+import {Http} from "xpresser/types/http";
+import {ParseRules} from "abolish";
 
 let dollarSign: DollarSign;
 let routes: any[] = [];
@@ -53,12 +53,12 @@ export function run(config: PluginData, $: DollarSign) {
     });
 }
 
-export type AbolishRoutesRule = Record<string, any> | ((http: Http) => Record<string, any>);
-export type AbolishRoutesRules = Record<string, AbolishRoutesRule>;
-export type AbolishRoutesMethods = {
-    POST?: AbolishRoutesRules;
-    PUT?: AbolishRoutesRules;
-    PATCH?: AbolishRoutesRules;
+export type RoutesGuardRule = Record<string, any> | ((http: Http) => Record<string, any>);
+export type RoutesGuardRules = Record<string, RoutesGuardRule>;
+export type RoutesGuardMethods = {
+    POST?: RoutesGuardRules;
+    PUT?: RoutesGuardRules;
+    PATCH?: RoutesGuardRules;
 };
 
 /**
@@ -67,12 +67,12 @@ export type AbolishRoutesMethods = {
  * @constructor
  * @param methods
  */
-export function ValidateRoutes(methods: AbolishRoutesMethods): AbolishRoutesMethods {
+export function ValidateRoutes(methods: RoutesGuardMethods): RoutesGuardMethods {
     // New rules holder
     let parsedRules: Record<string, any> = {};
 
     for (let [method, rules] of Object.entries(methods)) {
-        parsedRules[method] = {} as AbolishRoutesRules;
+        parsedRules[method] = {} as RoutesGuardRules;
         /**
          * Loop through rules, find controllers and replace with path.
          */
@@ -94,7 +94,7 @@ export function ValidateRoutes(methods: AbolishRoutesMethods): AbolishRoutesMeth
     }
 
     // Return ParsedRules.
-    return parsedRules as AbolishRoutesMethods;
+    return parsedRules as RoutesGuardMethods;
 }
 
 /**

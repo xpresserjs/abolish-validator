@@ -3,6 +3,7 @@
 node_modules
 yarn.lock
 tests
+
 # ignore the .ts files
 *.ts
 !exports/*.ts

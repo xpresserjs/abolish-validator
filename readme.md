@@ -103,43 +103,43 @@ Create a file @ `backend/ValidationRules.(js|ts)` and add the following to it:
 
 ##### JS
 ```javascript
-const AbolishRoutes = require("@xpresser/abolish/dist/AbolishRoutes");
+const RoutesGuard = require("@xpresser/abolish/RoutesGuard");
 
-// ===== Initialize AbolishRoutes =====
-const routes = new AbolishRoutes();
+// ===== Initialize RoutesGuard =====
+const guard = new RoutesGuard();
 
 // ===== Define validation for Routes =====
 // ===== Syntax =====
-routes["post" | "patch" | "put"]("Controller@action", rules);
-routes["post" | "patch" | "put"]("/exact/path/to/route", rules);
+guard["post" | "patch" | "put"]("Controller@action", rules);
+guard["post" | "patch" | "put"]("/exact/path/to/route", rules);
 
 // ===== Example =====
-routes.post("AuthController@login", {
+guard.post("AuthController@login", {
     email: "required|email",
     password: "required|min:6"
 });
 
-module.exports = routes;
+module.exports = guard;
 ```
 ##### TS
 ```typescript
-import AbolishRoutes from "@xpresser/abolish/dist/AbolishRoutes";
+import RoutesGuard from "@xpresser/abolish/RoutesGuard";
 
-// ===== Initialize AbolishRoutes =====
-const routes = new AbolishRoutes();
+// ===== Initialize RoutesGuard =====
+const guard = new RoutesGuard();
 
 // ===== Define validation for Routes =====
 // ===== Syntax =====
-routes["post" | "patch" | "put"]("Controller@action", rules);
-routes["post" | "patch" | "put"]("/exact/path/to/route", rules);
+guard["post" | "patch" | "put"]("Controller@action", rules);
+guard["post" | "patch" | "put"]("/exact/path/to/route", rules);
 
 // ===== Example =====
-routes.post("AuthController@login", {
+guard.post("AuthController@login", {
     email: "required|email",
     password: "required|min:6"
 });
 
-export = routes;
+export = guard;
 ```
 
 
