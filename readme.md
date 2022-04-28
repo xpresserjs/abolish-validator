@@ -83,7 +83,7 @@ To register the Middleware, add the following to your `use.json` file:
 ```json
 {
   "middlewares": {
-    "Abolish": "npm://@xpresser/abolish/dist/AbolishMiddleware.js"
+    "Abolish": "npm://@xpresser/abolish/AbolishMiddleware.js"
   }
 }
 ```
@@ -93,7 +93,7 @@ Or add it globally:
 ```json
 {
   "globalMiddlewares": [
-    "npm://@xpresser/abolish/dist/AbolishMiddleware.js"
+    "npm://@xpresser/abolish/AbolishMiddleware.js"
   ]
 }
 ```
