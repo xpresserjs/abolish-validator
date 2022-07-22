@@ -1,6 +1,6 @@
-import {$} from "./plugin-config";
-import {Obj} from "object-collection/exports";
-import {RoutesGuardMethods, RoutesGuardRule, ValidateRoutes} from "./index";
+import { $ } from "./plugin-config";
+import { Obj } from "object-collection/exports";
+import { CompileRouteRules, RoutesGuardMethods, RoutesGuardRule } from "./index";
 
 type AbolishMergeSource = Record<string, any> | AbolishRoutes;
 
@@ -8,12 +8,17 @@ class AbolishRoutes {
     #rules = Obj({});
 
     constructor() {
-        $.logDeprecated("1.12.0", "1.13.0", [
-            `Class {{AbolishRoutes}} is deprecated. Use {{RoutesGuard}} instead.`,
-            null,
-            `{{RoutesGuard}} can be imported from: {{"@xpresser/abolish/RoutesGuard"}}`
-        ], true);
-        console.trace()
+        $.logDeprecated(
+            "1.12.0",
+            "1.13.0",
+            [
+                `Class {{AbolishRoutes}} is deprecated. Use {{RoutesGuard}} instead.`,
+                null,
+                `{{RoutesGuard}} can be imported from: {{"@xpresser/abolish/RoutesGuard"}}`
+            ],
+            true
+        );
+        console.trace();
     }
 
     /**
@@ -76,7 +81,7 @@ class AbolishRoutes {
     }
 
     compileRules(): RoutesGuardMethods {
-        return ValidateRoutes(this.#rules.data);
+        return CompileRouteRules(this.#rules.data);
     }
 }
 

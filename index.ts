@@ -1,7 +1,8 @@
-import {DollarSign, PluginData} from "xpresser/types";
-import {pluginConfig} from "./plugin-config";
-import {Http} from "xpresser/types/http";
-import {ParseRules} from "abolish";
+import { DollarSign, PluginData } from "xpresser/types";
+import { pluginConfig } from "./plugin-config";
+import { Http } from "xpresser/types/http";
+import { Abolish, Schema } from "abolish";
+import { AbolishCompiled } from "abolish/src/Compiler";
 
 let dollarSign: DollarSign;
 let routes: any[] = [];
@@ -37,7 +38,7 @@ export function run(config: PluginData, $: DollarSign) {
 
         let providedAbolish = Abolish;
         if (pluginConfig.has("provideAbolish")) {
-            providedAbolish = pluginConfig.all().provideAbolish();
+            providedAbolish = pluginConfig.data.provideAbolish();
         }
 
         $.engineData.set("getProvidedAbolish", () => providedAbolish);
@@ -66,8 +67,12 @@ export type RoutesGuardMethods = {
  * Parse all rules for performance purposes.
  * @constructor
  * @param methods
+ * @param useCompiledRules
  */
-export function ValidateRoutes(methods: RoutesGuardMethods): RoutesGuardMethods {
+export function CompileRouteRules(
+    methods: RoutesGuardMethods,
+    useCompiledRules = false
+): RoutesGuardMethods {
     // New rules holder
     let parsedRules: Record<string, any> = {};
 
@@ -89,7 +94,11 @@ export function ValidateRoutes(methods: RoutesGuardMethods): RoutesGuardMethods 
 
             // Else use as it is.
             parsedRules[method][rule] =
-                typeof thisRule === "function" ? thisRule : ParseRules(thisRule);
+                typeof thisRule === "function" || thisRule instanceof AbolishCompiled
+                    ? thisRule
+                    : useCompiledRules
+                    ? Abolish.compileObject(thisRule)
+                    : Schema(thisRule);
         }
     }
 
