@@ -59,8 +59,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
     validateQuery<R = Record<string, any>>(
         rules: Record<keyof R | string, any>
     ): ValidationResult<R> {
-        const query = this.$query.all();
-        return this.validate<R>(query, rules);
+        return this.validate<R>(this.req.query, rules);
     }
 
     /**
@@ -70,8 +69,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
     validateBody<R = Record<string, any>>(
         rules: Record<keyof R | string, any>
     ): ValidationResult<R> {
-        const body = this.$body.all();
-        return this.validate<R>(body, rules);
+        return this.validate<R>(this.req.body, rules);
     }
 
     /**
@@ -81,8 +79,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
     validateQueryAsync<R = Record<string, any>>(
         rules: Record<keyof R | string, any>
     ): Promise<ValidationResult<R>> {
-        const query = this.$query.all();
-        return this.validateAsync<R>(query, rules);
+        return this.validateAsync<R>(this.req.query, rules);
     }
 
     /**
@@ -92,15 +89,14 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
     validateBodyAsync<R = Record<string, any>>(
         rules: Record<keyof R | string, any>
     ): Promise<ValidationResult<R>> {
-        const body = this.$body.all();
-        return this.validateAsync<R>(body, rules);
+        return this.validateAsync<R>(this.req.body, rules);
     }
 
     /**
      * Get validated body data.
      */
     validatedBody<R = Record<string, any>>(): R {
-        return this.state.get<R>("validatedBody", {} as R);
+        return this.state.data["validatedBody"] || ({} as R);
     }
 }
 

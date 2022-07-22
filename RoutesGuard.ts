@@ -1,10 +1,12 @@
-import {Obj} from "object-collection/exports";
-import {RoutesGuardMethods, RoutesGuardRule, ValidateRoutes} from "./index";
+import { Obj } from "object-collection/exports";
+import { CompileRouteRules, RoutesGuardMethods, RoutesGuardRule } from "./index";
 
 type AbolishMergeSource = Record<string, any> | RoutesGuard;
 
 class RoutesGuard {
     #rules = Obj({});
+
+    public useCompiledRules = true;
 
     /**
      * Merge multiple abolish routes instances
@@ -72,7 +74,7 @@ class RoutesGuard {
      * Compile rules
      */
     compileRules(): RoutesGuardMethods {
-        return ValidateRoutes(this.#rules.data);
+        return CompileRouteRules(this.#rules.data, this.useCompiledRules);
     }
 }
 

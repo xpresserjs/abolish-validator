@@ -1,6 +1,6 @@
-import {Http} from "xpresser/types/http";
-import {getInstance} from "xpresser";
-import {pluginConfig} from "./plugin-config";
+import { Http } from "xpresser/types/http";
+import { getInstance } from "xpresser";
+import { pluginConfig } from "./plugin-config";
 import RoutesGuard from "./RoutesGuard";
 
 const $ = getInstance();
@@ -47,7 +47,7 @@ export = async (http: Http): Promise<any> => {
         return http.next();
     }
 
-    if (!ValidationRules.hasOwnProperty(method)) return http.next();
+    if (!ValidationRules[method]) return http.next();
 
     let rules = ValidationRules[method][http.req.route?.path || http.req.path];
 
