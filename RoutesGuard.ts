@@ -6,7 +6,7 @@ type AbolishMergeSource = Record<string, any> | RoutesGuard;
 class RoutesGuard {
     #rules = Obj({});
 
-    public useCompiledRules = true;
+    constructor(public useCompiledRules = false) {}
 
     /**
      * Merge multiple abolish routes instances
