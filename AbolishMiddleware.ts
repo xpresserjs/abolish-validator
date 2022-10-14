@@ -19,9 +19,11 @@ if (pluginConfig.get("validationRules.enabled", false)) {
         try {
             ValidationRules = require($.path.resolve(ValidationRulesPath));
 
-            if (!ValidationRules || typeof ValidationRules !== "object") {
+            if (!ValidationRules || typeof ValidationRules !== "object")
                 return $.logErrorAndExit(`ValidationRules File must return an object!`);
-            }
+
+            // check if ValidationRules was exported as default
+            if (ValidationRules.default) ValidationRules = ValidationRules.default;
 
             if (
                 ValidationRules instanceof RoutesGuard ||

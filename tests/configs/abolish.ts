@@ -1,6 +1,6 @@
 import { Abolish } from "abolish";
 import { Http } from "xpresser/types/http";
-import { ValidationError } from "abolish/src/Types";
+import { ValidationError } from "abolish/src/types";
 
 export = () => ({
     /**

@@ -1,7 +1,7 @@
 import { DollarSign } from "xpresser/types";
 import { Http } from "xpresser/types/http";
 import { Abolish } from "abolish";
-import { ValidationError } from "abolish/src/Types";
+import { ValidationError } from "abolish/src/types";
 import { registerAllValidators } from "abolish/src/ValidatorHelpers";
 
 export = ($: DollarSign) => ({

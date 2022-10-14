@@ -8,6 +8,4 @@ guard.post("App@login", {
     username: "required|alphaNumeric"
 });
 
-console.dir(guard.compileRules(), { depth: null });
-
-export = guard;
+export default guard;

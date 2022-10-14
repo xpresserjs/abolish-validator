@@ -49,7 +49,6 @@ export function run(config: PluginData, $: DollarSign) {
     // Load Processed Routes
     $.on.bootServer((next) => {
         routes = $.routerEngine.allProcessedRoutes();
-
         return next();
     });
 }
