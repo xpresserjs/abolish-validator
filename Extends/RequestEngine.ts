@@ -1,6 +1,7 @@
-import type { ValidationResult } from "abolish/src/types";
+import type { AbolishSchema, ValidationResult } from "abolish/src/types";
 import type { Abolish } from "abolish";
 import { getInstance } from "xpresser";
+import { AbolishCompiledObject } from "abolish/src/Compiler";
 
 const $ = getInstance();
 // Get provided Abolish Class
@@ -19,9 +20,17 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
      */
     validate<R extends Record<string, any> = Record<string, any>>(
         object: Record<string, any>,
-        rules: Record<keyof R | string, any>
+        rules: AbolishSchema<R>
+    ): ValidationResult<R>;
+    validate<R extends Record<string, any>>(
+        object: Record<string, any>,
+        rules: AbolishCompiledObject
+    ): ValidationResult<R>;
+    validate<R extends Record<string, any> = Record<string, any>>(
+        object: Record<string, any>,
+        rules: Record<string, any>
     ): ValidationResult<R> {
-        return (this.abolish || ProvidedAbolish).validate<R>(object, rules);
+        return (this.abolish || ProvidedAbolish).validate<R>(object, rules as AbolishSchema<R>);
     }
 
     /**
@@ -31,9 +40,20 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
      */
     validateAsync<R extends Record<string, any> = Record<string, any>>(
         object: Record<string, any>,
-        rules: Record<keyof R | string, any>
+        rules: AbolishSchema<R>
+    ): Promise<ValidationResult<R>>;
+    validateAsync<R extends Record<string, any>>(
+        object: Record<string, any>,
+        rules: AbolishCompiledObject
+    ): Promise<ValidationResult<R>>;
+    validateAsync<R extends Record<string, any> = Record<string, any>>(
+        object: Record<string, any>,
+        rules: Record<string, any>
     ): Promise<ValidationResult<R>> {
-        return (this.abolish || ProvidedAbolish).validateAsync<R>(object, rules);
+        return (this.abolish || ProvidedAbolish).validateAsync<R>(
+            object,
+            rules as AbolishSchema<R>
+        );
     }
 
     /**
@@ -57,9 +77,9 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
      * @param rules
      */
     validateQuery<R extends Record<string, any> = Record<string, any>>(
-        rules: Record<keyof R | string, any>
+        rules: AbolishSchema<R> | AbolishCompiledObject
     ): ValidationResult<R> {
-        return this.validate<R>(this.req.query, rules);
+        return this.validate<R>(this.req.query, rules as AbolishSchema<R>);
     }
 
     /**
@@ -67,9 +87,9 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
      * @param rules
      */
     validateBody<R extends Record<string, any> = Record<string, any>>(
-        rules: Record<keyof R | string, any>
+        rules: AbolishSchema<R> | AbolishCompiledObject
     ): ValidationResult<R> {
-        return this.validate<R>(this.req.body, rules);
+        return this.validate<R>(this.req.body, rules as AbolishSchema<R>);
     }
 
     /**
@@ -77,9 +97,9 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
      * @param rules
      */
     validateQueryAsync<R extends Record<string, any> = Record<string, any>>(
-        rules: Record<keyof R | string, any>
+        rules: AbolishSchema<R> | AbolishCompiledObject
     ): Promise<ValidationResult<R>> {
-        return this.validateAsync<R>(this.req.query, rules);
+        return this.validateAsync<R>(this.req.query, rules as AbolishSchema<R>);
     }
 
     /**
@@ -89,7 +109,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
     validateBodyAsync<R extends Record<string, any> = Record<string, any>>(
         rules: Record<keyof R | string, any>
     ): Promise<ValidationResult<R>> {
-        return this.validateAsync<R>(this.req.body, rules);
+        return this.validateAsync<R>(this.req.body, rules as AbolishSchema<R>);
     }
 
     /**

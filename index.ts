@@ -78,7 +78,7 @@ export function CompileRouteRules(
     for (let [method, rules] of Object.entries(methods)) {
         parsedRules[method] = {} as RoutesGuardRules;
         /**
-         * Loop through rules, find controllers and replace with path.
+         * Loop through rules, find controllers, and replace with a path.
          */
         for (let rule in rules) {
             if (!rules.hasOwnProperty(rule)) continue;
