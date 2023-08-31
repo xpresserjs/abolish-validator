@@ -25,26 +25,23 @@ export function run(config: PluginData, $: DollarSign) {
     if ($.isNativeCliCommand()) return;
 
     // Load abolish Extender
-    $.on.boot((next) => {
-        const { Abolish } = require("abolish");
 
-        if (pluginConfig.has("extendAbolish")) {
-            $.logDeprecated("1.11.1", "1.11.1", [
-                "Abolish Config: `extendAbolish` is now deprecated, please rename the function to `provideAbolish` instead"
-            ]);
+    const { Abolish } = require("abolish");
 
-            $.logErrorAndExit("Make changes and restart server to apply changes");
-        }
+    if (pluginConfig.has("extendAbolish")) {
+        $.logDeprecated("1.11.1", "1.11.1", [
+            "Abolish Config: `extendAbolish` is now deprecated, please rename the function to `provideAbolish` instead"
+        ]);
 
-        let providedAbolish = Abolish;
-        if (pluginConfig.has("provideAbolish")) {
-            providedAbolish = pluginConfig.data.provideAbolish();
-        }
+        $.logErrorAndExit("Make changes and restart server to apply changes");
+    }
 
-        $.engineData.set("getProvidedAbolish", () => providedAbolish);
+    let providedAbolish = Abolish;
+    if (pluginConfig.has("provideAbolish")) {
+        providedAbolish = pluginConfig.data.provideAbolish();
+    }
 
-        return next();
-    });
+    $.engineData.set("getProvidedAbolish", () => providedAbolish);
 
     // Load Processed Routes
     $.on.bootServer((next) => {
