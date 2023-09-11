@@ -1,8 +1,6 @@
-import { DollarSign } from "xpresser/types";
-import { Http } from "xpresser/types/http";
-import { Abolish } from "abolish";
-import { ValidationError } from "abolish/src/types";
-import { registerAllValidators } from "abolish/src/ValidatorHelpers";
+import type { DollarSign } from "xpresser/types";
+import type { Http } from "xpresser/types/http";
+import type { ValidationError } from "abolish/src/types";
 
 export = ($: DollarSign) => ({
     /**
@@ -27,6 +25,9 @@ export = ($: DollarSign) => ({
      * Or provide a custom class to be used.
      */
     provideAbolish: (): typeof Abolish => {
+        const { Abolish } = require("abolish");
+        const { registerAllValidators } = require("abolish/src/ValidatorHelpers");
+
         // Uncomment below if you don't want to use all abolish validators.
         registerAllValidators(Abolish);
 
