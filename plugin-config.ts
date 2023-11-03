@@ -1,9 +1,8 @@
-import {namespace} from "./use.json";
 import importableConfig from "./exports/config";
-import {loadPluginConfig} from "@xpresser/plugin-tools/src/Config";
+import { loadPluginConfig } from "@xpresser/plugin-tools/src/Config";
 
 const { pluginConfig, $ } = loadPluginConfig({
-    namespace,
+    namespace: "abolish",
     type: "function",
     configFile: "abolish",
     default: importableConfig
