@@ -78,4 +78,4 @@ class RoutesGuard {
     }
 }
 
-export = RoutesGuard;
+export default RoutesGuard;

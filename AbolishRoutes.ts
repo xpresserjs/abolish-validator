@@ -85,4 +85,4 @@ class AbolishRoutes {
     }
 }
 
-export = AbolishRoutes;
+export default AbolishRoutes;

@@ -1,7 +1,8 @@
 import type { AbolishSchema, ValidationResult } from "abolish/src/types";
 import type { Abolish } from "abolish";
 import { getInstance } from "xpresser";
-import { AbolishCompiledObject } from "abolish/src/Compiler";
+import type { AbolishCompiledObject } from "abolish/src/Compiler";
+import { IsAbolishXpresserError } from "../index";
 
 const $ = getInstance();
 // Get provided Abolish Class
@@ -107,7 +108,7 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
      * @param rules
      */
     validateBodyAsync<R extends Record<string, any> = Record<string, any>>(
-        rules: Record<keyof R | string, any>
+        rules: AbolishSchema<R> | AbolishCompiledObject
     ): Promise<ValidationResult<R>> {
         return this.validateAsync<R>(this.req.body, rules as AbolishSchema<R>);
     }
@@ -117,6 +118,54 @@ class AbolishRequestEngine extends $.extendedRequestEngine() {
      */
     validatedBody<R = Record<string, any>>(): R {
         return this.state.data["validatedBody"] || ({} as R);
+    }
+
+    /**
+     * Validate body or throw error
+     * @param rules - Validation rules
+     */
+    validateBodyOrThrow<T extends Record<string, any>>(
+        rules: AbolishCompiledObject | AbolishSchema<T>
+    ): T {
+        const [err, body] = this.validateBody<T>(rules);
+        if (err) throw new IsAbolishXpresserError(err);
+        return body!;
+    }
+
+    /**
+     * Validate query or throw error
+     * @param rules - Validation rules
+     */
+    validateQueryOrThrow<T extends Record<string, any>>(
+        rules: AbolishCompiledObject | AbolishSchema<T>
+    ): T {
+        const [err, query] = this.validateQuery<T>(rules);
+        if (err) throw new IsAbolishXpresserError(err);
+        return query!;
+    }
+
+    /**
+     * Validate body or throw error async
+     * @param rules - Validation rules
+     */
+    async validateBodyOrThrowAsync<T extends Record<string, any>>(
+        rules: AbolishCompiledObject | AbolishSchema<T>
+    ): Promise<T> {
+        const [err, body] = await this.validateBodyAsync<T>(rules);
+        if (err) throw new IsAbolishXpresserError(err);
+        return body!;
+    }
+
+    /**
+     * Validate query or throw error async
+     * @param rules - Validation rules
+     */
+    async validateQueryOrThrowAsync<T extends Record<string, any>>(
+        rules: AbolishCompiledObject | AbolishSchema<T>
+    ): Promise<T> {
+        const [err, query] = await this.validateQueryAsync<T>(rules);
+        if (err) throw new IsAbolishXpresserError(err);
+        return query!;
     }
 }
 

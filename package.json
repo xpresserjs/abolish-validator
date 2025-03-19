@@ -20,11 +20,11 @@
     "@xpresser/plugin-tools": "^1.2.6"
   },
   "devDependencies": {
-    "abolish": "^6.5.2",
-    "prettier": "^3.0.3",
+    "abolish": "^6.8.3",
+    "prettier": "^3.5.3",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.2.2",
-    "xpresser": "^0.31.1"
+    "typescript": "^5.8.2",
+    "xpresser": "^0.32.8"
   },
   "peerDependencies": {
     "abolish": "^6.0.0"

@@ -1,8 +1,10 @@
 import { DollarSign, PluginData } from "xpresser/types";
 import { pluginConfig } from "./plugin-config";
-import { Http } from "xpresser/types/http";
+import type { Http } from "xpresser/types/http";
 import { Abolish, Schema } from "abolish";
 import { AbolishCompiled } from "abolish/src/Compiler";
+import { InXpresserError } from "xpresser";
+import { ValidationError } from "abolish/src/types";
 
 let dollarSign: DollarSign;
 let routes: any[] = [];
@@ -93,8 +95,8 @@ export function CompileRouteRules(
                 typeof thisRule === "function" || thisRule instanceof AbolishCompiled
                     ? thisRule
                     : useCompiledRules
-                    ? Abolish.compileObject(thisRule)
-                    : Schema(thisRule);
+                      ? Abolish.compileObject(thisRule)
+                      : Schema(thisRule);
         }
     }
 
@@ -129,4 +131,10 @@ function ControllerToPath(controller: string) {
     }
 
     return find[0].path;
+}
+
+export class IsAbolishXpresserError extends InXpresserError {
+    constructor(public abolishError: ValidationError) {
+        super(abolishError.message);
+    }
 }

@@ -2,7 +2,7 @@ import type { DollarSign } from "xpresser/types";
 import type { Http } from "xpresser/types/http";
 import type { ValidationError } from "abolish/src/types";
 
-export = ($: DollarSign) => ({
+export default ($: DollarSign) => ({
     /**
      * Validation Rules
      * If `validationRules.enabled` is true
